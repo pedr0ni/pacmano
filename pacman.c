@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char mapa[10][10];
+char mapa[20][20];
 int pacX, pacY;
 
 int score = 0;
@@ -13,8 +13,8 @@ void readMap() {
     file = fopen("mapa.txt", "r");
 
     int i, j;
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
+    for (i = 0; i < 20; i++) {
+        for (j = 0; j < 20; j++) {
             fscanf(file, "%c", &mapa[i][j]);
             if (mapa[i][j] == '@') {
                 pacX = i;
@@ -29,8 +29,8 @@ void printMap() {
     printf("\nSCORE = %d\n", score);
     printf("\n");
     int i, j;
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
+    for (i = 0; i < 20; i++) {
+        for (j = 0; j < 20; j++) {
             printf("%c", mapa[i][j]);
         }
     }
@@ -38,7 +38,7 @@ void printMap() {
 }
 
 int isParede(char position) {
-    if (position == '|' || position == '-') {
+    if (position == '|' || position == '-' || position == '_') {
         return 1;
     }
     return 0;
