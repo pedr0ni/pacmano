@@ -5,6 +5,7 @@ char mapa[20][20];
 int pacX, pacY;
 
 int score = 0;
+int maxScore = 0;
 
 void readMap() {
 
@@ -20,6 +21,7 @@ void readMap() {
                 pacX = i;
                 pacY = j;
             }
+            if (mapa[i][j] == '.') maxScore++;
         }
     }
 
@@ -44,8 +46,8 @@ int isParede(char position) {
     return 0;
 }
 
-void checkScore() {
-
+void checkScore(char position) {
+    if (!isParede(position) && position == '.') score++;
 }
 
 void readJogada() {
@@ -53,29 +55,43 @@ void readJogada() {
     char jogada;
 
     while (scanf("%c", &jogada) != EOF) {
+
         if (jogada == 'd' && !isParede(mapa[pacY][pacX + 1])) {
             mapa[pacY][pacX] = '\0';
             pacX++;
             mapa[pacY][pacX] = '@';
+            checkScore(mapa[pacY][pacX + 1]);
 
         } else if (jogada == 'a' && !isParede(mapa[pacY][pacX - 1])) {
             mapa[pacY][pacX] = '\0';
             pacX--;
             mapa[pacY][pacX] = '@';
+            checkScore(mapa[pacY][pacX - 1]);
 
         } else if (jogada == 'w' && !isParede(mapa[pacY - 1][pacX])) {
             mapa[pacY][pacX] = '\0';
             pacY--;
             mapa[pacY][pacX] = '@';
+            checkScore(mapa[pacY - 1][pacX]);
 
         } else if (jogada == 's' && !isParede(mapa[pacY + 1][pacX])) {
             mapa[pacY][pacX] = '\0';
             pacY++;
             mapa[pacY][pacX] = '@';
+            checkScore(mapa[pacY + 1][pacX]);
 
+        }
+        if (score == maxScore) {
+            int xd;
+            for (xd = 0; xd < 25; xd++) {
+                printf("\n");
+            }
+            printf("VOCE VENCEU O PACMANO DO PEDRONI GOD!");
+            break;
         }
         printMap();
     }
+
 
 }
 
